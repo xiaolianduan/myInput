@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="jquery1.12.3.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="jquery-validation/dist/jquery.validate.js"></script>
+    <script src="jquery-validation/dist/localization/messages_zh.min.js"></script>
+    <style>
+        form{
+            width: 600px;
+            padding: 50px;
+            height: auto;
+            margin: auto;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px #ccc;
+        }
+        label.error{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+<form action="index.php" method="post" class="myform" >
+    <div class="form-group">
+        <label for="exampleUserName1">Username</label>
+        <input type="text" class="form-control" id="exampleUserName1" placeholder="Username" name="Username" required
+         data-msg-required="请输入用户名" minlength="1">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="Email" required
+         data-msg-required="请输入邮箱地址" email="true" >
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="Password1" required
+         data-msg-required="请输入密码" minlength="6">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword2">Again Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" name="Password2" required
+         data-msg-required="请输入密码" minlength="6" equalTo="#exampleInputPassword1"
+         data-msg-equalTo="您两次输入的密码不相同">
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="man" required data-msg-required="必选一个">
+            男
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="women" required>
+            女
+        </label>
+        <label for="optionsRadios" class="error"></label>
+    </div>
+    <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" name="option[]" required minlength="2" data-msg-minlength="必选2项"> 跑步
+    </label>
+    <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox2" name="option[]" required> 阅读
+    </label>
+    <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox3" name="option[]" required> 爬山
+    </label>
+    <label for="option[]" class="error"></label>
+    <div class="checkbox">
+    </div>
+    <button type="submit" class="btn btn-default" name="submit">Submit</button>
+</form>
+</body>
+<script>
+    $().ready(function() {
+        $(".myform").validate({
+            rules: {
+                Username: {
+                    remote: {
+                        type: "post",
+                        url:  "index.php",
+                        data: {
+                            Username: function() {
+                                return $("#exampleUserName1").val();
+                            }
+                        },
+                        dataType: "html"
+                    }
+                }
+            }
+        })
+    })
+</script>
+</html>
